@@ -56,3 +56,16 @@ UserSchema.methods = {
   },
 };
 export default mongoose.model("User", UserSchema);
+
+/*
+- authenticate: This method is called to verify sign-in attempts by
+matching the user-provided password text with the hashed_password
+stored in the database for a specific user.
+
+- encryptPassword: This method is used to generate an encrypted hash
+from the plain-text password and a unique salt value using the crypto
+module from Node.
+
+- makeSalt: This method generates a unique and random salt value using
+the current timestamp at execution and Math.random().
+ */
