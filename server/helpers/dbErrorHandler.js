@@ -1,7 +1,7 @@
 /*
  * Get Unique error field names
  */
-const getUniqueError = (err) => {
+const getUniqueErrorMessage = (err) => {
   let output;
   try {
     let fieldName = err.message.substring(
@@ -18,23 +18,25 @@ const getUniqueError = (err) => {
 /*
  * Get the error message from the error object
  */
-const getErrorMessages = (err) => {
+const getErrorMessage = (err) => {
   let message = "";
+
   if (err.code) {
     switch (err.code) {
       case 11000:
       case 11001:
-        message: getUniqueErrorMessage(err);
+        message = getUniqueErrorMessage(err);
         break;
       default:
-        message: "Something went wrong";
+        message = "Something went wrong";
     }
   } else {
     for (let errName in err.errors) {
-      if (err.errors[errName].message) {
-        message = err.errors[errName].message;
-      }
+      if (err.errors[errName].message) message = err.errors[errName].message;
     }
   }
+
   return message;
 };
+
+export default { getErrorMessage };
