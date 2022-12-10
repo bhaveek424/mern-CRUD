@@ -3,19 +3,28 @@ import app from "./express";
 import mongoose from "mongoose";
 
 // Connection URL
-mongoose.Promise = global.Promise;
-mongoose.connect(config.mongoUri, {
-  useNewUri: true,
-  useCreateIndex: true,
-  useUnifiedTopology: true,
-});
-mongoose.connection.on("error", () => {
-  throw new Error(`Unable to connect to database: ${mongoUri}`);
-});
 
-app.listen(config.port, (err) => {
+mongoose.set("strictQuery", false);
+mongoose
+  .connect(config.mongoUrl, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() =>
+    app.listen(config.port, () =>
+      console.log(`Server running on port: ${config.port}`)
+    )
+  )
+  .catch((error) => console.log(error.message));
+
+//mongoose.set("useFindAndModify", false);
+/*mongoose.connection.on("error", () => {
+  throw new Error(`Unable to connect to database: ${CONNECTION_URL}`);
+}); */
+
+/*app.listen(PORT, (err) => {
   if (err) {
     console.log(err);
   }
-  console.log("Server started on port %s.", config.port);
-});
+  console.log("Server started on port %s.", PORT);
+}); */
